@@ -22,7 +22,7 @@ client.on('ready', () => {
 
 client.on('messageCreate', (message) => {
     if(message.channel.id !== "1153958075548573756") return;
-    send(message.content, webhooks)
+    send(message.content.replace(/(<@(.+)>)/g, ""), webhooks)
 })
 
 let app = express();
