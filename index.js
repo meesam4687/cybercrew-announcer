@@ -1,8 +1,7 @@
 const Discord = require('discord.js');
 require('dotenv').config();
-const fetch = require("node-fetch-commonjs");
 const express = require('express');
-
+const send = require('./webhook.js');
 
 const client = new Discord.Client({
   intents: [
@@ -13,33 +12,9 @@ const client = new Discord.Client({
   ]
 });
 
-const webhookUrl = process.env.API;
-
-function send(q) {
-    const messageData = {
-        text: q,
-    };
-
-    fetch(webhookUrl, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(messageData),
-    })
-        .then((response) => {
-            if (response.ok) {
-                console.log("Message sent successfully");
-            } else {
-                console.error(
-                    `Failed to send message. Error: ${response.status} ${response.statusText}`
-                );
-            }
-        })
-        .catch((error) => {
-            console.error("Error:", error);
-        });
-}
+const webhooks = [
+    process.env.API
+]
 
 client.on('ready', () => {
     console.log("Started and Running")
@@ -47,7 +22,7 @@ client.on('ready', () => {
 
 client.on('messageCreate', (message) => {
     if(message.channel.id !== "1153958075548573756") return;
-    send(message.content)
+    send(message.content, webhooks)
 })
 
 let app = express();
