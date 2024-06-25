@@ -27,7 +27,7 @@ client.on('ready', () => {
 });
 
 client.on('messageCreate', (message) => {
-    if (message.channel.id === "1153958075548573756"){
+    if (message.channel.id === "1153958075548573756") {
         send(message.content.replace(/(<@(.+)>)/g, ""), webhooks)
     }
     fetch("https://api.llama-api.com/chat/completions", {
@@ -41,13 +41,17 @@ client.on('messageCreate', (message) => {
         }),
         headers: { 'Authorization': `Bearer ${process.env.LLAMA}`, 'Content-Type': 'application/json' }
     }).then(response => response.json()).then(data => {
-        if (data.choices[0].message.content == 'NOK') {
-            console.log(`${message.content} is not OK`)
-            if(message.author.id in adminIDs) return;
-            message.delete()
-        }
-        else {
-            console.log(`${message.content} is okay`)
+        try {
+            if (data.choices[0].message.content == 'NOK') {
+                console.log(`${message.content} is not OK`)
+                if (message.author.id in adminIDs) return;
+                message.delete()
+            }
+            else {
+                console.log(`${message.content} is okay`)
+            }
+        } catch {
+            console.log("error")
         }
     })
 })
