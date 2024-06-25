@@ -21,8 +21,9 @@ client.on('ready', () => {
 });
 
 client.on('messageCreate', (message) => {
-    if (message.channel.id !== "1153958075548573756") return;
-    send(message.content.replace(/(<@(.+)>)/g, ""), webhooks)
+    if (message.channel.id === "1153958075548573756"){
+        send(message.content.replace(/(<@(.+)>)/g, ""), webhooks)
+    }
     fetch("https://api.llama-api.com/chat/completions", {
         method: 'post',
         body: JSON.stringify({
