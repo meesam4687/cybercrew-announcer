@@ -36,7 +36,11 @@ client.on('messageCreate', (message) => {
         headers: { 'Authorization': `Bearer ${process.env.LLAMA}`, 'Content-Type': 'application/json' }
     }).then(response => response.json()).then(data => {
         if (data.choices[0].message.content == 'NOK') {
+            console.log(`${message.content} is not OK`)
             message.delete()
+        }
+        else {
+            console.log(`${message.content} is okay`)
         }
     })
 })
