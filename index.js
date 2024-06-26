@@ -50,8 +50,8 @@ client.on('messageCreate', (message) => {
             else {
                 console.log(`${message.content} is okay`)
             }
-        } catch {
-            console.log("error")
+        } catch ( e ) {
+            console.log(e)
         }
     })
 })
